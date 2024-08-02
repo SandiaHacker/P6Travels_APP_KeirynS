@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P6Travels_APP_KeirynS.Views.UserSingUpPage"
+             Title="User SingUp">
+    <VerticalStackLayout Padding="20">
+
+        <Entry x:Name="TxtEmail" Placeholder="Username/Email" Keyboard="Email"/>
+
+        <Entry x:Name="TxtName" Placeholder="Name" Keyboard="Text"/>
+
+        <Entry x:Name="TxtPhone" Placeholder="Phone Nummber" Keyboard="Telephone"/>
+
+        <Entry x:Name="TxtPassword" Placeholder="Password" Keyboard="Text"/>
+
+        <Picker x:Name="LstUserRoles" Title="Select User Role" ItemDisplayBinding="{Binding UserRoleDescription}"/>
+
+        <Button x:Name="BtnAdd" Text="Add User"/>
+
+        <Button x:Name="BtnCancel" Text="Cancel" Clicked="BtnCancel_Clicked"/>
+
+    </VerticalStackLayout>
+</ContentPage>
