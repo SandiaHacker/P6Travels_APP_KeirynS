@@ -15,9 +15,11 @@
 
         <Picker x:Name="LstUserRoles" Title="Select User Role" ItemDisplayBinding="{Binding UserRoleDescription}"/>
 
-        <Button x:Name="BtnAdd" Text="Add User"/>
+        <StackLayout Orientation="Horizontal">
+        
+        <Button x:Name="BtnAdd" Text="Add User" Clicked="BtnAdd_Clicked" BackgroundColor="Green" TextColor="WhiteSmoke" FontAttributes="Bold" CornerRadius="15" WidthRequest="160" Margin="0,0,10,0" />
 
-        <Button x:Name="BtnCancel" Text="Cancel" Clicked="BtnCancel_Clicked"/>
-
+            <Button x:Name="BtnCancel" Text="Cancel" Clicked="BtnCancel_Clicked" BackgroundColor="Red" TextColor="WhiteSmoke" FontAttributes="Bold" CornerRadius="15" WidthRequest="160" Margin="10,0,0,0"/>
+        </StackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -1,34 +1,43 @@
-﻿using Newtonsoft.Json;
-using RestSharp;
+﻿using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace P6Travels_APP_KeirynS.Models
 {
-    public class UserRole
+    public class User
     {
+        //áca no hace falta nombrar el objeto como DTO, solo es necesario en el API
+        //De hecho el equipo de desarrollo no deberia saber la forma del 
+        //modelo nativo en el API.
+
         [JsonIgnore]
         public RestRequest Request { get; set; }
+        public int UsuarioID { get; set; }
 
-        //Atributos de la clase, en este ejemplo usaremos la clase nativa
-        //luego lo cambiamos por el DTO
-        public int UserRoleId { get; set; }
+        public string? Correo { get; set; }
 
-        public string UserRoleDescription { get; set; } = null!;
+        public string? Nombre { get; set; }
 
-        //crear la funión que consume el get que entrega todos los roles 
-        //desde el API
+        public string? Telefono { get; set; }
 
-        public async Task<List<UserRole>> GetUserRolesAsync()
+        public string? Contrasennia { get; set; }
+
+        public int RolID { get; set; }
+
+        public string? RolDescripcion { get; set; }
+
+        //funcion quee permite agregar un usuario
+        public async Task<bool> AddUserAsync()
         {
             try
             {
                 //este es el sufijo que completa la ruta de consumo del API
-                string RouteSurfix = string.Format("UserRoles");
+                string RouteSurfix = string.Format("Users/AddUserFromApp");
 
                 string URL = Services.WebAPIConnection.BaseURL + RouteSurfix;
 
@@ -39,23 +48,24 @@ namespace P6Travels_APP_KeirynS.Models
                 //agregamos la info de seguridad API Key 
                 Request.AddHeader(Services.WebAPIConnection.ApiKeyName, Services.WebAPIConnection.ApiKeyValue);
 
+                //cuando enviamos objetos hacia el API dedbemos seriaolizarlos antes
+
+                string SerializedModel = JsonConvert.SerializeObject(this);
+                Request.AddBody(SerializedModel);
+
                 //Ahora se ejecuta la llamada 
                 RestResponse response = await client.ExecuteAsync(Request);
 
                 //Validamos el resultado del llamado al API
                 HttpStatusCode statusCode = response.StatusCode;
 
-                if (statusCode == HttpStatusCode.OK)
+                if (response != null && statusCode == HttpStatusCode.Created)
                 {
-                    //usamos newtonsoft para descomponer el JSON de respuesta del API y convertirlo
-                    //en un objeto de tipo UserRole que se pueda entender en la progra
-
-                    var list = JsonConvert.DeserializeObject<List<UserRole>>(response.Content);
-                    return list;
+                    return true;
                 }
                 else
                 {
-                    return null;
+                    return false;
                 }
 
             }
@@ -64,6 +74,7 @@ namespace P6Travels_APP_KeirynS.Models
                 string message = ex.Message;
                 throw;
             }
+
         }
     }
 }

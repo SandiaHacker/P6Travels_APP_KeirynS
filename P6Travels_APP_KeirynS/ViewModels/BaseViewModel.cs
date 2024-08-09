@@ -16,9 +16,9 @@ namespace P6Travels_APP_KeirynS.ViewModels
 
         private bool isBusy = false;
 
-        public bool MyProperty
+        public bool IsBusy
         {
-            get { return isBusy; }
+            get { return IsBusy; }
             set { SetProperty(ref isBusy, value); }
         }
 
